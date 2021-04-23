@@ -1,0 +1,56 @@
+  
+{% extends "index.html" %}
+{% load static %}
+
+{% block container %}
+<style>
+.name{
+    font-weight:900;
+}
+.card{
+    width: 300px;
+    padding: 13px;
+    border: 1px solid darkblue;
+    margin:10px 0px;
+}
+</style>
+
+
+<div>
+    {% if user.is_superuser %}
+        <h4> Create Proposal Project</h4>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{form.name}}
+            {{form.description}}
+
+            <button type="submit">Save</button>
+        </form>
+    {% else %}
+
+        {% if assigned_project %}
+            <div class="card">
+                <p><span class="name">Project Name: </span>{{assigned_project.project}}</p>
+                <p><span class="name">Supervisor: </span> {{assigned_project.project.teacher}}</p>
+                <p><span class="name">Project Description: </span> {{assigned_project.project.description}}</p>
+
+            </div>
+        {% else %}
+            <h4>Available Proposal Projects</h4>
+
+            {% for project in projects %}
+                <div class="card">
+                    <p><span class="name">Project Name: </span>{{project.name}}</p>
+                    <p><span class="name">Supervisor: </span> {{project.teacher}}</p>
+                    <a href="{% url 'book_project' project.id %}">Book</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+    {% endif %}
+
+
+</div>
+{% endblock %}

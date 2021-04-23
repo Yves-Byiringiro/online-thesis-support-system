@@ -1,0 +1,38 @@
+  
+{% extends "index.html" %}
+{% load static %}
+
+{% block container %}
+<style>
+.name{
+    font-weight:900;
+}
+.card{
+    width: 300px;
+    padding: 13px;
+    border: 1px solid darkblue;
+    margin:10px 0px;
+}
+</style>
+
+
+<div>
+
+      
+            <h4>Project Feedback</h4>
+
+            <div class="card">
+                <p><span class="name">Feedback File: </span> {{feedback.feedback_file}}</p>
+                <p><span class="name">Feedback Comment: </span> {{feedback.comment}}</p>
+                <p><span class="name">Submission Date: </span> {{feedback.date}}</p>
+            </div>
+     
+    
+
+
+    
+</div>
+
+{% endblock %}
+
+

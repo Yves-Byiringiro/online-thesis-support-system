@@ -1,0 +1,16 @@
+  
+{% extends "index.html" %}
+{% load static %}
+
+{% block container %}
+
+
+<div>
+    {{error}}
+    <form method="post">
+    {% csrf_token %}
+    {{form.status}}
+    <button type="submit">Save</button>
+    </form>
+</div>
+{% endblock %}

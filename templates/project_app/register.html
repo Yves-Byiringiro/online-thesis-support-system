@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block container %}
+
+
+    <form method="post">
+    {% csrf_token %}
+        <div class="d-flex align-items-center justify-content-center bg-br-primary2 ht-100v">
+
+          <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
+
+            <div class="form-group">
+                {{form.username}}
+            </div>
+            <div class="form-group">
+                {{form.email}}
+            </div>
+            <div class="form-group">
+                {{form.password1}}
+            </div>
+            <div class="form-group">
+                {{form.password2}}
+            </div>
+            <button type="submit" class="btn btn-info btn-block">Register</button>
+
+            <div class="mg-t-60 tx-center">Already have an account ? <a href="{% url 'login' %}" class="tx-info">Login</a></div>
+          </div>
+        </div>
+    </form>
+
+
+{% endblock %}

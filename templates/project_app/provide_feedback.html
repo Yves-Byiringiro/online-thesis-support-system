@@ -1,0 +1,25 @@
+  
+{% extends "index.html" %}
+{% load static %}
+
+{% block container %}
+
+
+<div>
+
+    {% if already_gave_feedback  %}
+    
+        <h4>You have submitted the feedback for this project</h4>
+    {% else %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">SUBMIT</button>
+        </form>
+
+    {% endif %}
+
+
+</div>
+{% endblock %}
