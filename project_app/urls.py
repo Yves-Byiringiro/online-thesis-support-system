@@ -12,11 +12,11 @@ urlpatterns = [
     path('register/', signup, name='register'),
     path('dashboard/', dashboard, name='dashboard'),
 
-
-
-    path('selected-project/', selected_project, name='selected_project'),
-    path('confirm-selected-project/<int:pk>', confirm_project, name='confirm_project'),
-    path('denied-project', denied_project, name='denied_project'),
+    path('write-topic/', write_topic, name='write_topic'),
+    path('selected-topics/', selected_project, name='selected_project'),
+    path('approve-deny-selected-topic/<int:pk>', confirm_project, name='confirm_project'),
+    path('approved-topics', approved_topics, name='approved_topic'),
+    path('denied-topics', denied_topics, name='denied_topics'),
     path('proposal-projects', proposal_projects, name='proposal_projects'),
     path('write-feedback/<int:pk>', write_feedback, name='write_feedback'),
     path('submitted-projects', submitted_projects, name='submitted_projects'),

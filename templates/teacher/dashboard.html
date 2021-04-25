@@ -1,0 +1,45 @@
+{% extends "index2.html" %}
+{% load static %}
+
+{% block content %}
+
+<div>
+    {% if user.is_superuser %}
+        <h4> Create Proposal Project</h4>
+{% comment %} 
+        <form method="POST">
+            {% csrf_token %}
+            {{form.name}}
+            {{form.description}}
+
+            <button type="submit">Save</button>
+        </form> {% endcomment %}
+        <h3>SUPER USER</h3>
+    {% else %}
+
+        {% if assigned_project %}
+            <div class="card">
+                <p><span class="name">Project Name: </span>{{assigned_project.project}}</p>
+                <p><span class="name">Supervisor: </span> {{assigned_project.project.teacher}}</p>
+                <p><span class="name">Project Description: </span> {{assigned_project.project.description}}</p>
+
+            </div>
+        {% else %}
+            <h4>Available Proposal Projects</h4>
+
+            {% for project in projects %}
+                <div class="card">
+                    <p><span class="name">Project Name: </span>{{project.name}}</p>
+                    <p><span class="name">Supervisor: </span> {{project.teacher}}</p>
+                    <a href="{% url 'book_project' project.id %}">Book</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

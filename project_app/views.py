@@ -29,7 +29,7 @@ def dashboard(request):
         else:
             form = ProposedProjectForm()
         
-        return render(request, 'project_app/dashboard.html', {'form':form})
+        return render(request, 'teacher/dashboard.html', {'form':form})
 
     else:  
         projects = Topic.objects.all().exclude(status='APPROVED')
@@ -40,10 +40,26 @@ def dashboard(request):
 
 
 
+def write_topic(request):
+    if request.method == 'POST':
+        form = ProposedProjectForm(request.POST)
+        if form.is_valid():
+            save_project = form.save(commit=False)
+            save_project.teacher = request.user
+            save_project.name = request.POST['name']
+            save_project.description = request.POST['description']
+            save_project.save()
+            return redirect('dashboard')
+    else:
+        form = ProposedProjectForm()
+    
+    return render(request , 'teacher/create_topic.html', {'form':form})
+
+
 
 def selected_project(request):
-    selected_project = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='PENDING')
-    return render(request, 'project_app/selected_project.html',{'selected_project':selected_project})
+    selected_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='PENDING')
+    return render(request, 'teacher/selected_topic.html',{'selected_topics':selected_topics})
 
 
 def confirm_project(request, pk):
@@ -54,17 +70,22 @@ def confirm_project(request, pk):
         check_assigned_twice = SelectedTopic.objects.filter(student=project.student).filter(status='APPROVED').exists() and form.cleaned_data.get('status') == 'APPROVED'
 
         if check_assigned_twice:
-            return render(request, 'project_app/confirm_denie_project.html',{'form':form, "error": "The student has another project assigned to him/her"})
+            return render(request, 'teacher/approve.html',{'form':form, "error": "The student has another project assigned to him/her"})
 
         form.save()
         return redirect('selected_project')
 
-    return render(request, 'project_app/confirm_denie_project.html',{'form':form})
+    return render(request, 'teacher/approve.html',{'form':form})
 
-def denied_project(request):
-    denied_projects = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='DENIED')
+def approved_topics(request):
+    approved_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='APPROVED')
 
-    return render(request, 'project_app/denied_projects.html',{'denied_projects':denied_projects})
+    return render(request, 'teacher/approved_topics.html',{'approved_topics':approved_topics})
+
+def denied_topics(request):
+    denied_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='DENIED')
+
+    return render(request, 'teacher/denied_topics.html',{'denied_topics':denied_topics})
 
 
 def proposal_projects(request):

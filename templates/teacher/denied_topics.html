@@ -1,0 +1,58 @@
+{% extends "index2.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+.project-detail{
+  color:black;
+  font-weight:500;
+}
+.title-main{
+    color:black;
+    font-weight:600;
+    text-align:center;
+    
+}
+.labl{
+  display:block;
+}
+</style>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+      <div class="col-md-12">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title title-main">DENIED TOPICS</h4>
+        </div>
+      </div>
+      
+        {% for topic in denied_topics %}
+
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Project Name</h4>
+              <p class="card-category">{{topic.project}}</p>
+            </div>
+            <div class="card-body">
+              <label class="labl"><span class="project-detail">Student Name :</span> {{topic.student}}</label>
+              <label class="labl"><span class="project-detail">Student Comment :</span> {{topic.student_view}}</label>
+              <label class="labl"><span class="project-detail">Submission Date :</span> {{topic.date}}</label>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
