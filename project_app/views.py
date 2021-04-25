@@ -90,7 +90,7 @@ def denied_topics(request):
 
 def proposal_projects(request):
     proposal_projects = ProjectProposal.objects.all().filter(status=False)
-    return render(request, 'project_app/proposal_projects.html', {'proposal_projects':proposal_projects})
+    return render(request, 'teacher/proposal_projects.html', {'proposal_projects':proposal_projects})
 
 
 def write_feedback(request, pk):
@@ -102,20 +102,25 @@ def write_feedback(request, pk):
             write_feedback = form.save(commit=False)
             write_feedback.teacher = request.user
             write_feedback.project_proposal = project_proposal
+            write_feedback.feedback_file = request.POST['feedback_file']
+            write_feedback.comment = request.POST['comment']
+
+
             write_feedback.save()
             return redirect('proposal_projects')
+
     else:
         form = ProposalFeedbackForm()
     
     already_gave_feedback = ProposalFeedback.objects.filter(project_proposal=project_proposal).exists()
 
-    return render(request, 'project_app/write_feedback.html',{'form':form, 'already_gave_feedback':already_gave_feedback})
+    return render(request, 'teacher/proposal_feedback.html',{'form':form, 'already_gave_feedback':already_gave_feedback})
 
 
 
 def submitted_projects(request):
     submitted_projects = ProjectSubmission.objects.all()
-    return render(request, 'project_app/submitted_projects.html', {'submitted_projects':submitted_projects})
+    return render(request, 'teacher/submitted_projects.html', {'submitted_projects':submitted_projects})
 
 
 
@@ -128,6 +133,9 @@ def provide_feedback(request, pk):
             feedback = form.save(commit=False)
             feedback.teacher = request.user
             feedback.project = project
+            feedback.report = request.POST['report']
+            feedback.comment = request.POST['comment']
+
             feedback.save()
             return redirect('proposal_projects')
     else:
@@ -135,7 +143,7 @@ def provide_feedback(request, pk):
 
     already_gave_feedback = ProjectSubmissionFeedback.objects.filter(project=project).filter(project__status=project.status).exists()
 
-    return render(request, 'project_app/provide_feedback.html',{'form':form,'already_gave_feedback':already_gave_feedback})
+    return render(request, 'teacher/project_feedback.html',{'form':form,'already_gave_feedback':already_gave_feedback})
 
 
 
@@ -149,7 +157,7 @@ def add_project_materials(request):
             return redirect('dashboard')
     else:
         form = ProjectMaterialForm()
-    return render(request, 'project_app/add_project_materials.html', {'form':form})
+    return render(request, 'teacher/add_project_materials.html', {'form':form})
 
 
 def all_feedback_materials(request):
