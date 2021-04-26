@@ -33,10 +33,10 @@ def dashboard(request):
 
     else:  
         projects = Topic.objects.all().exclude(status='APPROVED')
-        assigned_project = SelectedTopic.objects.get(student=request.user)
+        assigned_project = SelectedTopic.objects.filter(student=request.user)
 
 
-    return render(request, 'project_app/dashboard.html', {'projects':projects, 'assigned_project':assigned_project})
+    return render(request, 'teacher/dashboard.html', {'projects':projects, 'assigned_project':assigned_project})
 
 
 
@@ -102,10 +102,8 @@ def write_feedback(request, pk):
             write_feedback = form.save(commit=False)
             write_feedback.teacher = request.user
             write_feedback.project_proposal = project_proposal
-            write_feedback.feedback_file = request.POST['feedback_file']
-            write_feedback.comment = request.POST['comment']
-
-
+            # write_feedback.feedback_file = request.POST['feedback_file']
+            # write_feedback.comment = request.POST['comment']
             write_feedback.save()
             return redirect('proposal_projects')
 
@@ -114,7 +112,7 @@ def write_feedback(request, pk):
     
     already_gave_feedback = ProposalFeedback.objects.filter(project_proposal=project_proposal).exists()
 
-    return render(request, 'teacher/proposal_feedback.html',{'form':form, 'already_gave_feedback':already_gave_feedback})
+    return render(request, 'teacher/write_feedback.html',{'form':form, 'already_gave_feedback':already_gave_feedback})
 
 
 
@@ -133,8 +131,8 @@ def provide_feedback(request, pk):
             feedback = form.save(commit=False)
             feedback.teacher = request.user
             feedback.project = project
-            feedback.report = request.POST['report']
-            feedback.comment = request.POST['comment']
+            # feedback.report = request.POST['report']
+            # feedback.comment = request.POST['comment']
 
             feedback.save()
             return redirect('proposal_projects')
@@ -162,7 +160,7 @@ def add_project_materials(request):
 
 def all_feedback_materials(request):
     feedback_materials = ProjectMaterialsFeedback.objects.filter(project__teacher=request.user)
-    return render(request ,'project_app/all_feedback_materials.html',{'feedback_materials':feedback_materials})
+    return render(request ,'teacher/all_feedback_materials.html',{'feedback_materials':feedback_materials})
 
 
 
@@ -180,7 +178,7 @@ def book_project(request, pk):
             check_book_twice = SelectedTopic.objects.filter(project=project).filter(student=request.user).exists()
 
             if check_book_twice:
-                return render(request, 'project_app/topic_proposal.html',{'project':project, 'form':form, "error": "You can't select the same project twice"})
+                return render(request, 'student/take_project.html',{'project':project, 'form':form, "error": "You can't select the same project twice"})
 
             book_project = form.save(commit=False)
             book_project.project = project
@@ -190,7 +188,7 @@ def book_project(request, pk):
     else:
         form = SelectedTopicForm()
 
-    return render(request, 'project_app/project_proposal.html',{'project':project, 'form':form})
+    return render(request, 'student/take_project.html',{'project':project, 'form':form})
 
 
 def upload_proposal(request):
@@ -207,21 +205,21 @@ def upload_proposal(request):
     
     already_exist = ProjectProposal.objects.filter(student=request.user).exists()
 
-    return render(request, 'project_app/upload_proposal.html',{'form':form, 'already_exist':already_exist})
+    return render(request, 'student/upload_proposal.html',{'form':form, 'already_exist':already_exist})
 
 
 
 def proposal_feedback(request):
     try:
         feedback = ProposalFeedback.objects.get(project_proposal__student=request.user)
-        return render(request ,'project_app/proposal_feedback.html',{'feedback':feedback})
+        return render(request ,'student/proposal_feedback.html',{'feedback':feedback})
 
     except:
         return redirect('no_proposal_feedback')
 
 
 def no_proposal_feedback(request):
-    return render(request, 'project_app/no_proposal_feedback.html')
+    return render(request, 'student/no_proposal_feedback.html')
 
 
 def submit_project(request):
@@ -235,7 +233,7 @@ def submit_project(request):
                 check_draft_exist = ProjectSubmission.objects.filter(student=request.user).filter(status=status).exists()
 
                 if check_draft_exist:
-                    return render(request, 'project_app/submit_project.html',{'form':form, 'error':status})
+                    return render(request, 'student/submit_project.html',{'form':form, 'error':status})
 
                 submit_project = form.save(commit=False)
                 submit_project.student = request.user
@@ -247,29 +245,33 @@ def submit_project(request):
             form = ProjectSubmissionForm() 
     else:
         return redirect('no_feedback')
-    return render(request, 'project_app/submit_project.html',{'form':form})
+    return render(request, 'student/submit_project.html',{'form':form})
 
 
 
 def no_feedback(request):
-    return render(request, 'project_app/no_feedback.html')
+    return render(request, 'student/no_feedback.html')
 
-def draft_feedback(request):
+
+
+def project_submission_feedback(request):
     try:
         draft_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='DRAFT')
         final_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='FINAL')
         
-        return render(request,'project_app/draft_feedback.html',{'draft_feedback':draft_feedback, 'final_feedback':final_feedback})
+        return render(request,'student/project_submission_feedback.html',{'draft_feedback':draft_feedback, 'final_feedback':final_feedback})
     except:
-        return redirect('no_draft_feedback')
+        return redirect('no_feedback_project_submission')
 
-def no_draft_feedback(request):
-    return render(request, 'project_app/no_draft_feedback.html')
+
+
+def no_feedback_project_submission(request):
+    return render(request, 'student/no_feedback_project_submission.html')
 
 
 def project_materials(request):
     materials = ProjectMaterial.objects.filter(project__student=request.user)
-    return render(request, 'project_app/project_materials.html',{'materials':materials})
+    return render(request, 'student/project_materials.html',{'materials':materials})
 
 def feedback_materials(request, pk):
     material = ProjectMaterial.objects.get(id=pk)
@@ -283,4 +285,4 @@ def feedback_materials(request, pk):
             return redirect('dashboard')
     else:
         form = ProjectMaterialsFeedbackForm()
-    return render(request, 'project_app/feedback_materials.html',{'form':form})
+    return render(request, 'student/feedback_materials.html',{'form':form})

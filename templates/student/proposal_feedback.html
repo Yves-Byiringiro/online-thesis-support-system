@@ -1,0 +1,60 @@
+{% extends "index2.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+.project-detail{
+  color:black;
+  font-weight:500;
+}
+.approve-link{
+  display: block;
+  margin-top: 10px;
+  font-weight: 700;
+}
+.title-main{
+    color:black;
+    font-weight:600;
+    text-align:center;
+    
+}
+.labl{
+  display:block;
+}
+</style>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title title-main">PROPOSAL FEEDBACK</h4>
+        </div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Project Name</h4>
+              <p class="card-category">{{feedback.project_proposal.project}}</p>
+            </div>
+            <div class="card-body">
+              <label class="labl"><span class="project-detail">Feedback File Name :</span>  {{feedback.feedback_file}}</label>
+              <label class="labl"><span class="project-detail">Feedback Comment :</span> {{feedback.comment}}</label>
+              <label class="labl"><span class="project-detail">Submission Date :</span> {{feedback.date}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+

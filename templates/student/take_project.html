@@ -1,0 +1,93 @@
+  
+{% extends "index2.html" %}
+
+{% block content %}
+
+
+
+<style>
+
+
+.form-topic{
+  background:white;
+  padding:15px;
+}
+.topic-name{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+}
+.input-description{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+
+}
+.form-label{
+  color:black;
+}
+.form-button{
+    background: #9c27b0;
+    color: white;
+    padding: 6px;
+    width: 121px;
+    border: none;
+    cursor: pointer;
+}
+.back-button{
+    margin-right:10px;
+    border: 1px solid #9c27b0;
+    padding: 6px;
+}
+.title-main{
+    color:black;
+    font-weight:600;
+    text-align:center;
+    
+}
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title title-main">{{project.name}}</h4>
+        </div>
+        {{error}}
+    </div>
+    <div class="col-md-1 mb-4"></div>
+    <div class="col-md-10 mb-4">
+        <div class="card-header card-header-primary">
+          <p>{{project.description}}</p> 
+        </div>
+    </div>
+    <div class="col-md-1 mb-4"></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-10 form-card">
+      <form method="post" class="form-topic">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="topicDescription" class="form-label">Your Comment</label>
+             {{form.student_view}}
+          </div>
+          <div class="mb-1">
+            <a  href="{% url 'dashboard' %}" class="back-button">Take me Back</a>
+            <button class="form-button" type="submit">Submit</button>
+
+          </div>
+      </form>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+	const review = document.getElementById('id_student_view');
+	review.className = 'form-control input-description';
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+  
+{% extends "index2.html" %}
+
+{% block content %}
+
+
+<style>
+
+
+.form-topic{
+  background:white;
+  padding:15px;
+}
+.topic-name{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+}
+.input-description{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+
+}
+.form-label{
+  color:black;
+}
+.form-button{
+    background: #9c27b0;
+    color: white;
+    padding: 6px;
+    width: 121px;
+    border: none;
+    cursor: pointer;
+}
+
+.title-main{
+    color:black;
+    font-weight:600;
+    text-align:center;
+    
+}
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+   
+    <div class="col-md-1"></div>
+    <div class="col-md-10 form-card">
+    {% if already_exist %}
+        <h5>You have already submitted the project proposal !, You can't submit proposal twice</h5>
+    {% else %}
+      <form method="post" class="form-topic" enctype="multipart/form-data">
+          {% csrf_token %}
+         <div class="mb-4">
+            <label for="topicName" class="form-label">Project</label>
+            {{form.project}}
+          </div>
+          <div class="mb-3">
+            <label for="topicName" class="form-label">Proposal Project File</label>
+            {{form.proposal_file}}
+          </div>
+          <div class="mb-3">
+            <label for="topicDescription" class="form-label">Comment</label>
+             {{form.comment}}
+          </div>
+          <div class="mb-1">
+            <button class="form-button" type="submit">Submit</button>
+
+          </div>
+      </form>
+      {% endif %}
+    </div>
+    <div class="col-md-1">
+
+    </div>
+  </div>
+</div>
+
+<script>
+    const project = document.getElementById('id_project');
+	project.className = 'form-control topic-name';
+
+    const proposal_file = document.getElementById('id_proposal_file');
+	proposal_file.className = 'form-control topic-name';
+
+	const comment = document.getElementById('id_comment');
+	comment.className = 'form-control input-description';
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "index2.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+
+.form-topic{
+  background:white;
+  padding:15px;
+}
+.topic-name{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+}
+.input-description{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+
+}
+.form-label{
+  color:black;
+}
+.form-button{
+    background: #9c27b0;
+    color: white;
+    padding: 6px;
+    width: 121px;
+    border: none;
+    cursor: pointer;
+}
+.card-header{
+    margin-bottom:20px;
+}
+.title-main{
+    color:black;
+    font-weight:600;
+    text-align:center;
+    
+}
+</style>
+
+
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-1"></div>
+    <div class="col-md-10 form-card">
+      {% if error %}
+          <h3>Sorry you can't upload {{error}} twice</h3>
+      {% endif %}
+        <form method="post" class="form-topic" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="mb-4">
+              <label for="topicName" class="form-label">Report File</label>
+              {{form.report}}
+            </div>
+            <div class="mb-4">
+              <label for="topicName" class="form-label">Design Images</label>
+              {{form.design_images}}
+            </div>
+            <div class="mb-4">
+              <label for="topicName" class="form-label">Project Status</label>
+              {{form.status}}
+            </div>
+            <div class="mb-1">
+              <button class="form-button">Submit</button>
+            </div>
+        </form>
+       
+    </div>
+    <div class="col-md-1">
+
+    </div>
+  </div>
+</div>
+        
+
+<script>
+    const report = document.getElementById('id_report');
+	report.className = 'form-control topic-name';
+
+    const design_images = document.getElementById('id_design_images');
+	design_images.className = 'form-control topic-name';
+
+    const status = document.getElementById('id_status');
+	  status.className = 'form-control topic-name';
+
+</script>
+
+{% endblock %}

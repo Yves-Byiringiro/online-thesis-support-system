@@ -61,11 +61,11 @@
       {% csrf_token %}
           <div class="mb-4">
             <label for="topicName" class="form-label">Feedback File</label>
-            <input type="file" name="report" class="form-control topic-name" id="exampleFormControlInput1" required>
+            {{form.report}}
           </div>
           <div class="mb-3">
             <label for="topicDescription" class="form-label">Comment</label>
-            <textarea class="form-control input-description" name="comment" id="exampleFormControlTextarea1" rows="8" required></textarea>
+            {{form.comment}}
           </div>
           <div class="mb-1">
             <button class="form-button">Submit</button>
@@ -79,6 +79,16 @@
   </div>
 </div>
   
+  <script>
+    const report = document.getElementById('id_report');
+	  report.className = 'form-control topic-name';
+
+
+	const comment = document.getElementById('id_comment');
+	comment.className = 'form-control input-description';
+
+</script>
+
   {% endblock %}
 
 
