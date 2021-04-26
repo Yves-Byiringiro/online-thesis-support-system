@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import *
 from django.contrib.auth import login as auth_login
 from .models import *
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -16,7 +17,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'project_app/register.html', {'form': form})
 
-
+@login_required
 def dashboard(request):
     if request.user.is_superuser:
         if request.method == 'POST':
@@ -39,7 +40,7 @@ def dashboard(request):
     return render(request, 'teacher/dashboard.html', {'projects':projects, 'assigned_project':assigned_project})
 
 
-
+@login_required
 def write_topic(request):
     if request.method == 'POST':
         form = ProposedProjectForm(request.POST)
@@ -56,12 +57,13 @@ def write_topic(request):
     return render(request , 'teacher/create_topic.html', {'form':form})
 
 
-
+@login_required
 def selected_project(request):
     selected_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='PENDING')
     return render(request, 'teacher/selected_topic.html',{'selected_topics':selected_topics})
 
 
+@login_required
 def confirm_project(request, pk):
     project = SelectedTopic.objects.get(id=pk)
 
@@ -77,22 +79,30 @@ def confirm_project(request, pk):
 
     return render(request, 'teacher/approve.html',{'form':form})
 
+
+@login_required
 def approved_topics(request):
     approved_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='APPROVED')
 
     return render(request, 'teacher/approved_topics.html',{'approved_topics':approved_topics})
 
+
+
+@login_required
 def denied_topics(request):
     denied_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='DENIED')
 
     return render(request, 'teacher/denied_topics.html',{'denied_topics':denied_topics})
 
 
+@login_required
 def proposal_projects(request):
     proposal_projects = ProjectProposal.objects.all().filter(status=False)
     return render(request, 'teacher/proposal_projects.html', {'proposal_projects':proposal_projects})
 
 
+
+@login_required
 def write_feedback(request, pk):
     project_proposal = ProjectProposal.objects.get(id=pk)
 
@@ -102,8 +112,6 @@ def write_feedback(request, pk):
             write_feedback = form.save(commit=False)
             write_feedback.teacher = request.user
             write_feedback.project_proposal = project_proposal
-            # write_feedback.feedback_file = request.POST['feedback_file']
-            # write_feedback.comment = request.POST['comment']
             write_feedback.save()
             return redirect('proposal_projects')
 
@@ -116,12 +124,15 @@ def write_feedback(request, pk):
 
 
 
+@login_required
 def submitted_projects(request):
     submitted_projects = ProjectSubmission.objects.all()
     return render(request, 'teacher/submitted_projects.html', {'submitted_projects':submitted_projects})
 
 
 
+
+@login_required
 def provide_feedback(request, pk):
     project = ProjectSubmission.objects.get(id=pk)
 
@@ -131,9 +142,6 @@ def provide_feedback(request, pk):
             feedback = form.save(commit=False)
             feedback.teacher = request.user
             feedback.project = project
-            # feedback.report = request.POST['report']
-            # feedback.comment = request.POST['comment']
-
             feedback.save()
             return redirect('proposal_projects')
     else:
@@ -145,6 +153,7 @@ def provide_feedback(request, pk):
 
 
 
+@login_required
 def add_project_materials(request):
     if request.method == 'POST':
         form = ProjectMaterialForm(request.POST or None, request.FILES)
@@ -158,6 +167,8 @@ def add_project_materials(request):
     return render(request, 'teacher/add_project_materials.html', {'form':form})
 
 
+
+@login_required
 def all_feedback_materials(request):
     feedback_materials = ProjectMaterialsFeedback.objects.filter(project__teacher=request.user)
     return render(request ,'teacher/all_feedback_materials.html',{'feedback_materials':feedback_materials})
@@ -168,6 +179,8 @@ def all_feedback_materials(request):
 ########################################    Students     ########################################
 
 
+
+@login_required
 def book_project(request, pk):
     project = Topic.objects.get(id=pk)
 
@@ -191,6 +204,8 @@ def book_project(request, pk):
     return render(request, 'student/take_project.html',{'project':project, 'form':form})
 
 
+
+@login_required
 def upload_proposal(request):
     if request.method == 'POST':
         form = ProjectProposalForm(request.POST or None, request.FILES)
@@ -209,6 +224,8 @@ def upload_proposal(request):
 
 
 
+
+@login_required
 def proposal_feedback(request):
     try:
         feedback = ProposalFeedback.objects.get(project_proposal__student=request.user)
@@ -218,10 +235,15 @@ def proposal_feedback(request):
         return redirect('no_proposal_feedback')
 
 
+
+
+@login_required
 def no_proposal_feedback(request):
     return render(request, 'student/no_proposal_feedback.html')
 
 
+
+@login_required
 def submit_project(request):
     feedback = ProposalFeedback.objects.filter(project_proposal__student=request.user).exists()
     if feedback:
@@ -249,11 +271,16 @@ def submit_project(request):
 
 
 
+
+@login_required
 def no_feedback(request):
     return render(request, 'student/no_feedback.html')
 
 
 
+
+
+@login_required
 def project_submission_feedback(request):
     try:
         draft_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='DRAFT')
@@ -265,14 +292,22 @@ def project_submission_feedback(request):
 
 
 
+
+@login_required
 def no_feedback_project_submission(request):
     return render(request, 'student/no_feedback_project_submission.html')
 
 
+
+
+@login_required
 def project_materials(request):
     materials = ProjectMaterial.objects.filter(project__student=request.user)
     return render(request, 'student/project_materials.html',{'materials':materials})
 
+
+
+@login_required
 def feedback_materials(request, pk):
     material = ProjectMaterial.objects.get(id=pk)
     if request.method == 'POST':
