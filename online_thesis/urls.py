@@ -1,6 +1,6 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
 from .views import *
+from django.contrib.auth.views import LoginView
 
 
 
@@ -8,9 +8,15 @@ from .views import *
 
 urlpatterns = [
 
-    path('', auth_views.LoginView.as_view(template_name='project_app/login.html'), name='login'),
-    path('register/', signup, name='register'),
+
+    path('', LoginView.as_view(template_name='student/login.html'), name='login'),
+
+    path('register-student/', register_student, name='register'),
     path('dashboard/', dashboard, name='dashboard'),
+
+
+    path('register-teacher/', register_teacher, name='register_teacher'),
+
 
     path('write-topic/', write_topic, name='write_topic'),
     path('selected-topics/', selected_project, name='selected_project'),
@@ -23,10 +29,6 @@ urlpatterns = [
     path('provide-feedback/<int:pk>', provide_feedback, name='provide_feedback'),
     path('add-project-materials', add_project_materials, name='add_project_materials'),
     path('feedback-materials/', all_feedback_materials, name='all_feedback_materials'),
-
-
-
-
 
 
     path('take-project/<int:pk>', book_project, name='book_project'),

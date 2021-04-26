@@ -33,8 +33,6 @@
             </a>
           </li>
 
-          {% if user.is_superuser %}
-
           <li class="nav-item  ">
             <a class="nav-link" href="{% url 'write_topic' %}">
               <i class="material-icons">person</i>
@@ -83,39 +81,6 @@
               <p>Project Materials Feedback</p>
             </a>
           </li>
-          {% else %}
-
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'upload_proposal' %}">
-              <i class="material-icons">language</i>
-              <p>Upload Project Proposal</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'proposal_feedback' %}">
-              <i class="material-icons">location_ons</i>
-              <p>Proposal Feedback</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'submit_project' %}">
-              <i class="material-icons">location_ons</i>
-              <p>Submit Project</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'project_submission_feedback' %}">
-              <i class="material-icons">bubble_chart</i>
-              <p>Project Submission Feedback</p>
-            </a>
-          </li>
-         <li class="nav-item ">
-            <a class="nav-link" href="{% url 'project_materials' %}">
-              <i class="material-icons">content_paste</i>
-              <p>Project Materials</p>
-            </a>
-          </li>
-          {% endif %}
         </ul>
       </div>
     </div>

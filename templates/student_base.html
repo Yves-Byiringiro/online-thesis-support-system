@@ -32,59 +32,6 @@
               <p>Dashboard</p>
             </a>
           </li>
-
-          {% if user.is_superuser %}
-
-          <li class="nav-item  ">
-            <a class="nav-link" href="{% url 'write_topic' %}">
-              <i class="material-icons">person</i>
-              <p>Create Topic</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'selected_project' %}">
-              <i class="material-icons">content_paste</i>
-              <p>Selected Topics</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'approved_topic' %}">
-              <i class="material-icons">library_books</i>
-              <p>Approved  Topics</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'denied_topics' %}">
-              <i class="material-icons">library_books</i>
-              <p>Denied  Topics</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'proposal_projects' %}">
-              <i class="material-icons">bubble_chart</i>
-              <p>Proposal Projects</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'submitted_projects' %}">
-              <i class="material-icons">location_ons</i>
-              <p>Submitted Projects</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'add_project_materials' %}">
-              <i class="material-icons">notifications</i>
-              <p>Add Project Materials</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'all_feedback_materials' %}">
-              <i class="material-icons">language</i>
-              <p>Project Materials Feedback</p>
-            </a>
-          </li>
-          {% else %}
-
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'upload_proposal' %}">
               <i class="material-icons">language</i>
@@ -115,7 +62,6 @@
               <p>Project Materials</p>
             </a>
           </li>
-          {% endif %}
         </ul>
       </div>
     </div>

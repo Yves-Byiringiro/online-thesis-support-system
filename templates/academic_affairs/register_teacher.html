@@ -1,0 +1,30 @@
+{% extends 'academic_affairs_base.html' %}
+{% block content %}
+<div class="content">
+	<div class="col-md-6 col-md-offset-3">
+		<section class="content-header">
+			<h1>
+				Add Teacher
+			</h1>
+		</section><br>
+		<div class="box box-warning">
+			<div class="box-body ">
+				<div class="content">
+
+					<form method="post" class="form-horizontal">
+						{% csrf_token %}
+
+						{{ form }}
+
+						<div class="form-group">
+							<button type="submit" class=" btn btn-block text-warning">Add</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

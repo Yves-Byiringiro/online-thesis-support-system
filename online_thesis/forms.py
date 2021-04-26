@@ -6,8 +6,14 @@ from .models import *
 
 
 
+class TeacherSignUpForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields=['first_name','last_name','username','email','password']
 
-class SignUpForm(UserCreationForm):
+
+
+class StudentSignUpForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter your username'}))
     email = forms.CharField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Enter your email'}))
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Enter password'}))

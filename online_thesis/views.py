@@ -2,45 +2,60 @@ from django.shortcuts import render,redirect
 from .forms import *
 from django.contrib.auth import login as auth_login
 from .models import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import Group
 
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
+
+def is_teacher(user):
+    return user.groups.filter(name='TEACHER').exists()
+
+
+def register_student(request):
+    form = StudentSignUpForm()
+    if request.method=='POST':
+        form = StudentSignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+            my_student_group = Group.objects.get_or_create(name='STUDENT')
+            my_student_group[0].user_set.add(user)
             return redirect('login')
-    else:
-        form = SignUpForm()
-    return render(request, 'project_app/register.html', {'form': form})
+    return render(request,'student/register.html',{'form':form})
+
+
+
+def register_teacher(request):
+    form = TeacherSignUpForm()
+    if request.method=='POST':
+        form = TeacherSignUpForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            user.set_password(user.password)
+            user.save()
+            my_teacher_group = Group.objects.get_or_create(name='TEACHER')
+            my_teacher_group[0].user_set.add(user)
+            return redirect('dashboard')
+    return render(request,'academic_affairs/register_teacher.html',{'form':form})
+
+
 
 @login_required
 def dashboard(request):
-    if request.user.is_superuser:
-        if request.method == 'POST':
-            form = ProposedProjectForm(request.POST)
-            if form.is_valid():
-                save_project = form.save(commit=False)
-                save_project.teacher = request.user
-                save_project.save()
-                return redirect('dashboard')
-        else:
-            form = ProposedProjectForm()
-        
-        return render(request, 'teacher/dashboard.html', {'form':form})
-
-    else:  
+    if is_teacher(request.user):
+        return render(request,'teacher/dashboard.html')
+    elif request.user.is_superuser:
+        return render(request,'academic_affairs/dashboard.html')
+    else:
         projects = Topic.objects.all().exclude(status='APPROVED')
         assigned_project = SelectedTopic.objects.filter(student=request.user)
-
-
-    return render(request, 'teacher/dashboard.html', {'projects':projects, 'assigned_project':assigned_project})
+        return render(request,'student/dashboard.html',{'projects':projects, 'assigned_project':assigned_project})
 
 
 @login_required
+@user_passes_test(is_teacher)
 def write_topic(request):
     if request.method == 'POST':
         form = ProposedProjectForm(request.POST)
@@ -58,12 +73,14 @@ def write_topic(request):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def selected_project(request):
     selected_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='PENDING')
     return render(request, 'teacher/selected_topic.html',{'selected_topics':selected_topics})
 
 
 @login_required
+@user_passes_test(is_teacher)
 def confirm_project(request, pk):
     project = SelectedTopic.objects.get(id=pk)
 
@@ -81,6 +98,7 @@ def confirm_project(request, pk):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def approved_topics(request):
     approved_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='APPROVED')
 
@@ -89,6 +107,7 @@ def approved_topics(request):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def denied_topics(request):
     denied_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='DENIED')
 
@@ -96,6 +115,7 @@ def denied_topics(request):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def proposal_projects(request):
     proposal_projects = ProjectProposal.objects.all().filter(status=False)
     return render(request, 'teacher/proposal_projects.html', {'proposal_projects':proposal_projects})
@@ -103,6 +123,7 @@ def proposal_projects(request):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def write_feedback(request, pk):
     project_proposal = ProjectProposal.objects.get(id=pk)
 
@@ -125,6 +146,7 @@ def write_feedback(request, pk):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def submitted_projects(request):
     submitted_projects = ProjectSubmission.objects.all()
     return render(request, 'teacher/submitted_projects.html', {'submitted_projects':submitted_projects})
@@ -133,6 +155,7 @@ def submitted_projects(request):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def provide_feedback(request, pk):
     project = ProjectSubmission.objects.get(id=pk)
 
@@ -154,6 +177,7 @@ def provide_feedback(request, pk):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def add_project_materials(request):
     if request.method == 'POST':
         form = ProjectMaterialForm(request.POST or None, request.FILES)
@@ -169,6 +193,7 @@ def add_project_materials(request):
 
 
 @login_required
+@user_passes_test(is_teacher)
 def all_feedback_materials(request):
     feedback_materials = ProjectMaterialsFeedback.objects.filter(project__teacher=request.user)
     return render(request ,'teacher/all_feedback_materials.html',{'feedback_materials':feedback_materials})
