@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import views as auth_views
 
 
 
@@ -9,11 +10,12 @@ from django.contrib.auth.views import LoginView
 urlpatterns = [
 
 
-    path('', LoginView.as_view(template_name='student/login.html'), name='login'),
+    path('', auth_views.LoginView.as_view(template_name='student/login.html'), name='login'),
 
-    path('register-student/', register_student, name='register'),
+    path('register/', register_student, name='register'),
     path('dashboard/', dashboard, name='dashboard'),
 
+    # path('sign-up/', sign_up, name='sign_up'),
 
     path('register-teacher/', register_teacher, name='register_teacher'),
 

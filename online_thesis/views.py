@@ -13,7 +13,6 @@ def is_teacher(user):
 
 
 def register_student(request):
-    form = StudentSignUpForm()
     if request.method=='POST':
         form = StudentSignUpForm(request.POST)
         if form.is_valid():
@@ -23,6 +22,8 @@ def register_student(request):
             my_student_group = Group.objects.get_or_create(name='STUDENT')
             my_student_group[0].user_set.add(user)
             return redirect('login')
+    else:
+        form = StudentSignUpForm()
     return render(request,'student/register.html',{'form':form})
 
 

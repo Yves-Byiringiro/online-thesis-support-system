@@ -9,19 +9,20 @@ from .models import *
 class TeacherSignUpForm(forms.ModelForm):
     class Meta:
         model = User
-        fields=['first_name','last_name','username','email','password']
+        fields = ['first_name','last_name','username','email','password']
 
 
 
-class StudentSignUpForm(UserCreationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter your username'}))
-    email = forms.CharField(max_length=254, required=True, widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Enter your email'}))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Enter password'}))
-    password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm password'}))
+class StudentSignUpForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Username'}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder':'Email'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ['username','email','password']
+
+
 
 class ProposedProjectForm(forms.ModelForm):
     class Meta:

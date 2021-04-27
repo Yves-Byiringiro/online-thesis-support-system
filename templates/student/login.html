@@ -4,47 +4,45 @@
 {% block container %}
 
 <style>
-  .loginf-notification{
-    background: #e04c2b;
-    color: #fff;
-    font-size: 17px;
-    }
+
+.text{
+    margin: 20px 0px 35px 0px;
+}
 </style>
 
 
-
-
-    <form method="post">
-    {% csrf_token %}
-        <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v">
-
-          <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
-
-            <div class="form-group">
-            {% comment %} {{form.username}}
-            </div>
-            <div class="form-group">
-            {{form.password}} {% endcomment %}
-            {{form}}
-            </div>
-            <button type="submit" class="btn btn-info btn-block">Login</button>
-
-            <div class="mg-t-60 tx-center">Don't have an account? <a href="{% url 'register' %}" class="tx-info">Register</a></div>
-          </div>
-        </div>
-    </form>
-
-
+		<h1>Account Login</h1>
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<form method="post">
+          {% csrf_token %}
+          {{form.username}}
+          {{form.password}}
+					<div class="wthree-text">
+						<label class="anim">
+						</label>
+						<div class="clear"> </div>
+					</div>
+					<input type="submit" value="SIGN-IN">
+				</form>
+        <p>Are you a student? <a href="{% url 'register' %}"> Register Now!</a></p>
+			</div>
+		</div>
 
 <script>
   username = document.getElementById('id_username');
   password = document.getElementById('id_password');
 
-  username.classList.add('form-control')
-  password.classList.add('form-control')
+  username.classList.add('text')
+  password.classList.add('text')
 
-  username.placeholder = "Enter your username";
-  password.placeholder = "Enter your password";
+  username.placeholder = "Username";
+  password.placeholder = "Password";
 
 </script>
 {% endblock %}
+
+
+
+
+
