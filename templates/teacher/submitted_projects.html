@@ -12,8 +12,7 @@
 .title-main{
     color:black;
     font-weight:600;
-    text-align:center;
-    
+    text-align:center;  
 }
 .approve-link{
   display: block;
@@ -22,6 +21,12 @@
 }
 .labl{
   display:block;
+}
+.no-topics{
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20px;
+  font-weight: 400;
 }
 </style>
 
@@ -34,24 +39,29 @@
                 <h4 class="card-title title-main">SUBMITTED PROJECTS</h4>
               </div>
               </div>
-
-                {% for project in submitted_projects %}
-                <div class="col-md-6">
-                  <div class="card">
-                    <div class="card-header card-header-primary">
-                      <h4 class="card-title">Project Name</h4>
-                      <p class="card-category">{{project.project}}</p>
+                {% if submitted_projects %}
+                    {% for project in submitted_projects %}
+                        <div class="col-md-6">
+                          <div class="card">
+                            <div class="card-header card-header-primary">
+                              <h4 class="card-title">Project Name</h4>
+                              <p class="card-category">{{project.project}}</p>
+                            </div>
+                            <div class="card-body">
+                              <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
+                              <label class="labl"><span class="project-detail">Project Report :</span> {{project.report}}</label>
+                              <label class="labl"><span class="project-detail">Project Status :</span>{{project.status}}</label>
+                              <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
+                              <a class="approve-link" href="{% url 'provide_feedback' project.id %}">Provide Feedback</a>
+                            </div>
+                          </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                      <p class="no-topics">No Submitted Projects Available</p>
                     </div>
-                    <div class="card-body">
-                      <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
-                      <label class="labl"><span class="project-detail">Project Report :</span> {{project.report}}</label>
-                      <label class="labl"><span class="project-detail">Project Status :</span>{{project.status}}</label>
-                      <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
-                      <a class="approve-link" href="{% url 'provide_feedback' project.id %}">Provide Feedback</a>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
+                {% endif %}
              </div>
             </div>
           </div>

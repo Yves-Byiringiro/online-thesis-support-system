@@ -61,7 +61,8 @@ def students(request):
 @login_required
 def dashboard(request):
     if is_teacher(request.user):
-        return render(request,'teacher/dashboard.html')
+        my_topics = Topic.objects.filter(teacher=request.user)
+        return render(request,'teacher/dashboard.html', {'my_topics':my_topics})
     elif request.user.is_superuser:
         context = {
             'topics':Topic.objects.all().count(),

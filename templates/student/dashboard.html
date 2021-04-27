@@ -51,7 +51,7 @@
                     </div>
                     <div class="card-body">
                         <label class="labl"><span class="project-detail">Supervisor :</span> {{assigned_project.project.teacher}}</label>
-                        <label class="labl"><span class="project-detail">Project Description :</span>{{assigned_project.project.description}}</label>
+                        <label class="labl"><span class="project-detail">Project Description :</span>{{assigned_project.project.snippet}}</label>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                               </div>
                               <div class="card-body">
                               <label class="labl"><span class="project-detail">Supervisor :</span> {{project.teacher}}</label>
-                              <label class="labl"><span class="project-detail">Project Description :</span>{{project.description}}</label>
+                              <label class="labl"><span class="project-detail">Project Description :</span>{{project.snippet}}</label>
 
                               <a class="approve-link" href="{% url 'book_project' project.id %}">Review Project</a>
                               </div>

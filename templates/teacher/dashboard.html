@@ -17,11 +17,16 @@
 .title-main{
     color:black;
     font-weight:600;
-    text-align:center;
-    
+    text-align:center; 
 }
 .labl{
   display:block;
+}
+.no-topics{
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20px;
+  font-weight: 400;
 }
 </style>
 
@@ -30,57 +35,32 @@
   <div class="row">
     <div class="col-md-12">
       <div class="row">
-      {% if user.is_superuser %}
 
-        <h3>SUPER USER</h3>
-      {% else %}
-        {% if assigned_project %}
             <div class="col-md-12">
                 <div class="card-header card-header-primary">
-                <h4 class="card-title title-main">MY PROPOSAL PROJECT</h4>
+                <h4 class="card-title title-main">MY PROPOSAL TOPICS</h4>
                 </div>
             </div>
-            <div class="col-md-2"></div>         
-            {% for assigned_project in assigned_project %}
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Project Name</h4>
-                        <p class="card-category">{{assigned_project.project}}</p>
-                    </div>
-                    <div class="card-body">
-                        <label class="labl"><span class="project-detail">Supervisor :</span> {{assigned_project.project.teacher}}</label>
-                        <label class="labl"><span class="project-detail">Project Description :</span>{{assigned_project.project.description}}</label>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            <div class="col-md-2"></div>         
-        {% else %}
-            <div class="col-md-12">
-            <div class="card-header card-header-primary">
-            <h4 class="card-title title-main">PROPOSAL PROJECTS</h4>
-            </div>
-            </div>
-
-                {% for project in projects %}
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                            <h4 class="card-title">Project Name</h4>
-                            <p class="card-category">{{project.name}}</p>
-                            </div>
-                            <div class="card-body">
-                            <label class="labl"><span class="project-detail">Supervisor :</span> {{project.teacher}}</label>
-                            <label class="labl"><span class="project-detail">Project Description :</span>{{project.description}}</label>
-
-                            <a class="approve-link" href="{% url 'book_project' project.id %}">Review Project</a>
-                            </div>
-                        </div>
-                    </div>
+            {% if my_topics %}
+                {% for topic in my_topics %}
+                  <div class="col-md-6">
+                      <div class="card">
+                          <div class="card-header card-header-primary">
+                              <h4 class="card-title">Project Name</h4>
+                              <p class="card-category">{{topic.name}}</p>
+                          </div>
+                          <div class="card-body">
+                              <label class="labl"><span class="project-detail">Topic Description :</span>{{topic.snippet2}}</label>
+                          </div>
+                      </div>
+                  </div>
                 {% endfor %}
+            {% else %}
+              <div class="col-md-12">
+                <p class="no-topics">No proposal topics available</p>
+              </div>
             {% endif %}
-        {% endif %}
+     
       </div>
     </div>
   </div>
@@ -88,4 +68,3 @@
 
 
 {% endblock %}
-

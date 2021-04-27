@@ -4,7 +4,6 @@
 {% block content %}
 
 <style>
-
 .project-detail{
   color:black;
   font-weight:500;
@@ -17,14 +16,18 @@
 .title-main{
     color:black;
     font-weight:600;
-    text-align:center;
-    
+    text-align:center; 
 }
 .labl{
   display:block;
 }
+.no-topics{
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20px;
+  font-weight: 400;
+}
 </style>
-
 
 <div class="container-fluid">
   <div class="row">
@@ -35,24 +38,29 @@
           <h4 class="card-title title-main">PROPOSAL PROJECTS</h4>
         </div>
         </div>
-
-        {% for project in proposal_projects %}
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Project Name</h4>
-              <p class="card-category">{{project.project}}</p>
-            </div>
-            <div class="card-body">
-              <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
-              <label class="labl"><span class="project-detail">Proposal Project File :</span> {{project.proposal_file}}</label>
-              <label class="labl"><span class="project-detail">Comment :</span> {{project.comment}}</label>
-              <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
-              <a class="approve-link" href="{% url 'write_feedback' project.id %}">Give Feedback</a>
-            </div>
+        {% if proposal_projects %}
+            {% for project in proposal_projects %}
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">Project Name</h4>
+                    <p class="card-category">{{project.project}}</p>
+                  </div>
+                  <div class="card-body">
+                    <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
+                    <label class="labl"><span class="project-detail">Proposal Project File :</span> {{project.proposal_file}}</label>
+                    <label class="labl"><span class="project-detail">Comment :</span> {{project.comment}}</label>
+                    <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
+                    <a class="approve-link" href="{% url 'write_feedback' project.id %}">Give Feedback</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p class="no-topics">No Proposal Projects Available</p>
           </div>
-        </div>
-        {% endfor %}
+        {% endif %}
 
       </div>
     </div>

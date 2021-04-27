@@ -12,11 +12,16 @@
 .title-main{
     color:black;
     font-weight:600;
-    text-align:center;
-    
+    text-align:center;  
 }
 .labl{
   display:block;
+}
+.no-topics{
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20px;
+  font-weight: 400;
 }
 </style>
 
@@ -29,25 +34,27 @@
           <h4 class="card-title title-main">APPROVED TOPICS</h4>
         </div>
       </div>
-
-        {% for topic in approved_topics %}
-        
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Project Name</h4>
-              <p class="card-category">{{topic.project}}</p>
-            </div>
-            <div class="card-body">
-              <label class="labl"><span class="project-detail">Student Name :</span> {{topic.student}}</label>
-              <label class="labl"><span class="project-detail">Student Comment :</span> {{topic.student_view}}</label>
-              <label class="labl"><span class="project-detail">Submission Date :</span>{{topic.date}}</label>
-            </div>
+        {% if approved_topics %}
+          {% for topic in approved_topics %}
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">Project Name</h4>
+                    <p class="card-category">{{topic.project}}</p>
+                  </div>
+                  <div class="card-body">
+                    <label class="labl"><span class="project-detail">Student Name :</span> {{topic.student}}</label>
+                    <label class="labl"><span class="project-detail">Student Comment :</span> {{topic.student_view}}</label>
+                    <label class="labl"><span class="project-detail">Submission Date :</span>{{topic.date}}</label>
+                  </div>
+                </div>
+              </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p class="no-topics">No Approved Topics Available</p>
           </div>
-        </div>
-
-      {% endfor %}
-      
+        {% endif %}
       </div>
     </div>
   </div>

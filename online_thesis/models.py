@@ -16,9 +16,12 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
-    
 
+    def snippet(self):
+        return self.description[:200] + '...'
 
+    def snippet2(self):
+        return self.description[:400] + '...'
 
 class SelectedTopic(models.Model):
     PROJECT_STATUS = (

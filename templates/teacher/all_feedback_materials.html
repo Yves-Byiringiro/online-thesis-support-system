@@ -17,11 +17,16 @@
 .title-main{
     color:black;
     font-weight:600;
-    text-align:center;
-    
+    text-align:center; 
 }
 .labl{
   display:block;
+}
+.no-topics{
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20px;
+  font-weight: 400;
 }
 </style>
 
@@ -35,23 +40,28 @@
           <h4 class="card-title title-main">PROJECT MATERIALS FEEDBACK</h4>
         </div>
         </div>
-
-        {% for feedback in feedback_materials %}
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Project Name</h4>
-              <p class="card-category">{{feedback.project}}</p>
-            </div>
-            <div class="card-body">
-              <label class="labl"><span class="project-detail">Student Name :</span> {{feedback.student}}</label>
-              <label class="labl"><span class="project-detail">Feedback on File :</span> {{feedback.similar_topic_file}}</label>
-              <label class="labl"><span class="project-detail">Comment :</span> {{feedback.comment}}</label>
-              <label class="labl"><span class="project-detail">Submission Date :</span>{{feedback.date}}</label>
-            </div>
+        {% if feedback_materials %}
+            {% for feedback in feedback_materials %}
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title">Project Name</h4>
+                      <p class="card-category">{{feedback.project}}</p>
+                    </div>
+                    <div class="card-body">
+                      <label class="labl"><span class="project-detail">Student Name :</span> {{feedback.student}}</label>
+                      <label class="labl"><span class="project-detail">Feedback on File :</span> {{feedback.similar_topic_file}}</label>
+                      <label class="labl"><span class="project-detail">Comment :</span> {{feedback.comment}}</label>
+                      <label class="labl"><span class="project-detail">Submission Date :</span>{{feedback.date}}</label>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p class="no-topics">No Project Materials Feedback Available</p>
           </div>
-        </div>
-        {% endfor %}
+        {% endif %}
 
       </div>
     </div>
