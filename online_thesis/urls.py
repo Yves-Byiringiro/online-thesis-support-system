@@ -31,6 +31,10 @@ urlpatterns = [
     path('provide-feedback/<int:pk>', provide_feedback, name='provide_feedback'),
     path('add-project-materials', add_project_materials, name='add_project_materials'),
     path('feedback-materials/', all_feedback_materials, name='all_feedback_materials'),
+    path('teachers-list/', teachers, name='teachers'),
+    path('students-list/', students, name='students'),
+
+
 
 
     path('take-project/<int:pk>', book_project, name='book_project'),

@@ -1,30 +1,111 @@
-{% extends 'academic_affairs_base.html' %}
+{% extends "academic_affairs_base.html" %}
+
 {% block content %}
-<div class="content">
-	<div class="col-md-6 col-md-offset-3">
-		<section class="content-header">
-			<h1>
-				Add Teacher
-			</h1>
-		</section><br>
-		<div class="box box-warning">
-			<div class="box-body ">
-				<div class="content">
 
-					<form method="post" class="form-horizontal">
-						{% csrf_token %}
 
-						{{ form }}
 
-						<div class="form-group">
-							<button type="submit" class=" btn btn-block text-warning">Add</button>
-						</div>
+<style>
 
-					</form>
+
+.form-topic{
+  background:white;
+  padding:15px;
+}
+.topic-name{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+}
+.form-label{
+  color:black;
+}
+.form-button{
+    background: #9c27b0;
+    color: white;
+    padding: 6px;
+    width: 121px;
+    border: none;
+    cursor: pointer;
+}
+.regist{
+	margin-bottom:50px;
+}
+.title-main{
+    color:black;
+    font-weight:500;
+    text-align:center;
+}
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 regist">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title title-main">REGISTER TEACHER</h4>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-10 form-card">
+      <form method="post" class="form-topic">
+          {% csrf_token %}
+		  <div class="row">
+		  	<div class="col-md-6">
+				<div class="mb-4">
+					<label for="topicName" class="form-label">First Name</label>
+					{{form.first_name}}
 				</div>
 			</div>
-		</div>
-	</div>
+			<div class="col-md-6">
+				<div class="mb-4">
+					<label for="topicName" class="form-label">Last Name</label>
+					{{form.last_name}}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="mb-4">
+					<label for="topicName" class="form-label">Username</label>
+					{{form.username}}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="mb-4">
+					<label for="topicName" class="form-label">Email</label>
+					{{form.email}}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="mb-4">
+					<label for="topicName" class="form-label">Password</label>
+					{{form.password}}
+				</div>
+			</div>
+		  </div>
+          <div class="mb-1">
+            <button class="form-button">Save</button>
+          </div>
+      </form>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+  </div>
 </div>
 
+
+<script>
+    const first_name = document.getElementById('id_first_name');
+	first_name.className = 'form-control topic-name';
+
+    const last_name = document.getElementById('id_last_name');
+	last_name.className = 'form-control topic-name';
+
+	const username = document.getElementById('id_username');
+	username.className = 'form-control topic-name';
+
+	const email = document.getElementById('id_email');
+	email.className = 'form-control topic-name';
+
+	const password = document.getElementById('id_password');
+	password.className = 'form-control topic-name';
+</script>
 {% endblock %}

@@ -1,0 +1,91 @@
+{% extends "academic_affairs_base.html" %}
+
+{% block content %}
+
+
+
+<style>
+
+
+.form-topic{
+  background:white;
+  padding:15px;
+}
+.topic-name{
+  border: 1px solid darkblue;
+  padding: 8px 4px 8px 10px;
+  margin-top:12px;
+}
+.form-label{
+  color:black;
+}
+.form-button{
+    background: #9c27b0;
+    color: white;
+    padding: 6px;
+    width: 121px;
+    border: none;
+    cursor: pointer;
+}
+.regist{
+	margin-bottom:50px;
+}
+.title-main{
+    color:black;
+    font-weight:500;
+    text-align:center;
+}
+.column-value{
+    text-transform: capitalize;
+}
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="card card-plain">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title mt-0"> Teachers</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="">
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Email
+                </th>
+                </thead>
+                <tbody>
+                {% if teachers %}
+                    {% for teacher in teachers %}
+                        <tr>
+                            <td><span class="column-value">{{teacher.first_name}}</span></td>
+                            <td><span class="column-value">{{teacher.last_name}}</span></td>
+                            <td>{{teacher.username}}</td>
+                            <td>{{teacher.email}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>There is no teacher found</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

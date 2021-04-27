@@ -27,7 +27,7 @@ def register_student(request):
     return render(request,'student/register.html',{'form':form})
 
 
-
+@login_required
 def register_teacher(request):
     form = TeacherSignUpForm()
     if request.method=='POST':
@@ -38,8 +38,23 @@ def register_teacher(request):
             user.save()
             my_teacher_group = Group.objects.get_or_create(name='TEACHER')
             my_teacher_group[0].user_set.add(user)
-            return redirect('dashboard')
+            return redirect('teachers')
     return render(request,'academic_affairs/register_teacher.html',{'form':form})
+
+
+
+
+@login_required
+def teachers(request):
+    teachers = User.objects.filter(groups__name='TEACHER')
+    return render(request, 'academic_affairs/teachers.html',{'teachers':teachers})
+
+
+
+@login_required
+def students(request):
+    students = User.objects.filter(groups__name='STUDENT')
+    return render(request, 'academic_affairs/students.html',{'students':students})
 
 
 
