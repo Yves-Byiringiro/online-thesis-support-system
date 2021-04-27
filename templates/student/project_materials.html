@@ -18,13 +18,17 @@
     color:black;
     font-weight:600;
     text-align:center;
-    
 }
 .labl{
   display:block;
 }
+.no-topics{
+  text-align: center;
+  margin-top: 60px;
+  font-size: 20px;
+  font-weight: 400;
+}
 </style>
-
 
 <div class="container-fluid">
   <div class="row">
@@ -35,22 +39,27 @@
           <h4 class="card-title title-main">PROJECT MATERIALS</h4>
         </div>
         </div>
-
-        {% for project in materials %}
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Project Name</h4>
-              <p class="card-category">{{project.project}}</p>
-            </div>
-            <div class="card-body">
-              <label class="labl"><span class="project-detail">Similar Topic File :</span> {{project.similar_topic_file}}</label>
-              <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
-              <a class="approve-link" href="{% url 'feedback_materials' project.id %}">Give Feedback</a>
+        {% if materials %}
+          {% for project in materials %}
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h4 class="card-title">Project Name</h4>
+                <p class="card-category">{{project.project}}</p>
+              </div>
+              <div class="card-body">
+                <label class="labl"><span class="project-detail">Similar Topic File :</span> {{project.similar_topic_file}}</label>
+                <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
+                <a class="approve-link" href="{% url 'feedback_materials' project.id %}">Give Feedback</a>
+              </div>
             </div>
           </div>
-        </div>
-        {% endfor %}
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+              <p class="no-topics">No Project Materials available for now.</p>
+          </div>
+        {% endif %}
 
       </div>
     </div>

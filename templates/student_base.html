@@ -21,8 +21,8 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
   
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+      <div class="logo"><a href="{% url 'dashboard' %}" class="simple-text logo-normal">
+          Online Thesis M. System
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -34,25 +34,25 @@
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'upload_proposal' %}">
-              <i class="material-icons">language</i>
+              <i class="material-icons">bubble_chart</i>
               <p>Upload Project Proposal</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'proposal_feedback' %}">
-              <i class="material-icons">location_ons</i>
+              <i class="material-icons">notifications</i>
               <p>Proposal Feedback</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'submit_project' %}">
-              <i class="material-icons">location_ons</i>
+              <i class="material-icons">library_books</i>
               <p>Submit Project</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'project_submission_feedback' %}">
-              <i class="material-icons">bubble_chart</i>
+              <i class="material-icons">notifications</i>
               <p>Project Submission Feedback</p>
             </a>
           </li>

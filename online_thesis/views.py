@@ -48,7 +48,15 @@ def dashboard(request):
     if is_teacher(request.user):
         return render(request,'teacher/dashboard.html')
     elif request.user.is_superuser:
-        return render(request,'academic_affairs/dashboard.html')
+        context = {
+            'topics':Topic.objects.all().count(),
+            'selected_topics':SelectedTopic.objects.filter(status="APPROVED").count(),
+            'draft_projects':ProjectSubmission.objects.filter(status="DRAFT").count(),
+            'final_projects':ProjectSubmission.objects.filter(status="FINAL").count(),
+            'students':User.objects.filter(groups__name='STUDENT').count(),
+            'teachers':User.objects.filter(groups__name='TEACHER').count()      
+        }
+        return render(request,'academic_affairs/dashboard.html',context)
     else:
         projects = Topic.objects.all().exclude(status='APPROVED')
         assigned_project = SelectedTopic.objects.filter(student=request.user)
@@ -301,8 +309,6 @@ def submit_project(request):
 @login_required
 def no_feedback(request):
     return render(request, 'student/no_feedback.html')
-
-
 
 
 

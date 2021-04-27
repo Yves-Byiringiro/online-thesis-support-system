@@ -34,11 +34,11 @@ urlpatterns = [
 
 
     path('take-project/<int:pk>', book_project, name='book_project'),
-    path('upload-proposal-project', upload_proposal, name='upload_proposal'),
+    path('upload-project-proposal', upload_proposal, name='upload_proposal'),
     path('proposal-feedback', proposal_feedback, name='proposal_feedback'),
-    path('no-proposal-feedback', no_proposal_feedback, name='no_proposal_feedback'),
+    path('no-feedback-proposal', no_proposal_feedback, name='no_proposal_feedback'),
     path('submit-project', submit_project, name='submit_project'),
-    path('no-feedback', no_feedback, name='no_feedback'),
+    path('no-feedback-for-proposal', no_feedback, name='no_feedback'),
     path('project-submission-feedback', project_submission_feedback, name='project_submission_feedback'),
     path('no-feedback-project-submission', no_feedback_project_submission, name='no_feedback_project_submission'),
     path('project-materials', project_materials, name='project_materials'),

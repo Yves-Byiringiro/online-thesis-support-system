@@ -28,17 +28,124 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
       <div class="row">
-        <h3>SUPER USER</h3>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card card-stats">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">library_books</i>
+                </div>
+                <p class="card-category">Proposal Topics</p>
+                <h3 class="card-title">{{topics}}
+                  <small></small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card card-stats">
+              <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">library_books</i>
+                </div>
+                <p class="card-category">Selected Topics</p>
+                <h3 class="card-title">{{selected_topics}}
+                  <small></small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card card-stats">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">content_paste</i>
+                </div>
+                <p class="card-category">Submitted Projects</p>
+                <h3 class="card-title">{{draft_projects}}
+                  <small></small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger">DRAFT</i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card card-stats">
+              <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">content_paste</i>
+                </div>
+                <p class="card-category">Submitted Projects</p>
+                <h3 class="card-title">{{final_projects}}
+                  <small></small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger">FINAL</i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card card-stats">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">person</i>
+                </div>
+                <p class="card-category">STUDENTS</p>
+                <h3 class="card-title">{{students}}
+                  <small></small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card card-stats">
+              <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">person</i>
+                </div>
+                <p class="card-category">TEACHERS</p>
+                <h3 class="card-title">{{teachers}}
+                  <small></small>
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger"></i>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
+    <div class="col-md-2"></div>
   </div>
 </div>
 
-{% for student in students %}
-  <p>{{student.first_name}}</p>ppp
-{% endfor %}
+
 
 
 {% endblock %}
