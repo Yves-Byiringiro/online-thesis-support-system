@@ -48,7 +48,14 @@
     <div class="col-md-1"></div>
     <div class="col-md-10 form-card">
     {% if already_exist %}
-        <h5>You have already submitted the project proposal !, You can't submit proposal twice</h5>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title title-main">You have already submitted the project proposal !, You can't submit proposal project twice</h4>
+          </div>
+        </div>
+      </div>
+   
     {% else %}
       <form method="post" class="form-topic" enctype="multipart/form-data">
           {% csrf_token %}

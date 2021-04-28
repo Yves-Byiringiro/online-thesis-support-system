@@ -27,6 +27,14 @@
   font-size: 20px;
   font-weight: 400;
 }
+.download{
+  margin-left:10px;
+}
+.download-img{
+    width: 20px;
+    height: 14px;
+}
+
 </style>
 
 <div class="container-fluid">
@@ -48,7 +56,7 @@
                   </div>
                   <div class="card-body">
                     <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
-                    <label class="labl"><span class="project-detail">Proposal Project File :</span> {{project.proposal_file}}</label>
+                    <label class="labl"><span class="project-detail">Proposal Project File :</span> {{project.filename}} <a href="{{project.proposal_file.url}}" download> <span class="download"><img class="download-img" src="{% static 'img/download.png' %}" /> Download</span></a></label>
                     <label class="labl"><span class="project-detail">Comment :</span> {{project.comment}}</label>
                     <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
                     <a class="approve-link" href="{% url 'write_feedback' project.id %}">Give Feedback</a>

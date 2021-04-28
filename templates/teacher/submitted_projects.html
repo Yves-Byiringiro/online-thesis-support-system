@@ -1,4 +1,5 @@
 {% extends "teacher_base.html" %}
+
 {% load static %}
 
 {% block content %}
@@ -9,63 +10,106 @@
   color:black;
   font-weight:500;
 }
-.title-main{
-    color:black;
-    font-weight:600;
-    text-align:center;  
-}
 .approve-link{
   display: block;
   margin-top: 10px;
   font-weight: 700;
 }
+.title-main{
+  color:black;
+  font-weight:600;
+  text-align:center;
+}
 .labl{
   display:block;
 }
-.no-topics{
-  text-align: center;
-  margin-top: 60px;
-  font-size: 20px;
-  font-weight: 400;
+.no-feed{
+  margin-top:150px 
+}
+.download{
+  margin-left:10px;
+}
+.download-img{
+    width: 20px;
+    height: 14px;
+}
+.title-feedback{
+    margin: auto;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: underline;
 }
 </style>
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="row">
-              <div class="col-md-12">
-              <div class="card-header card-header-primary">
-                <h4 class="card-title title-main">SUBMITTED PROJECTS</h4>
-              </div>
-              </div>
-                {% if submitted_projects %}
-                    {% for project in submitted_projects %}
-                        <div class="col-md-6">
-                          <div class="card">
-                            <div class="card-header card-header-primary">
-                              <h4 class="card-title">Project Name</h4>
-                              <p class="card-category">{{project.project}}</p>
-                            </div>
-                            <div class="card-body">
-                              <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
-                              <label class="labl"><span class="project-detail">Project Report :</span> {{project.report}}</label>
-                              <label class="labl"><span class="project-detail">Project Status :</span>{{project.status}}</label>
-                              <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
-                              <a class="approve-link" href="{% url 'provide_feedback' project.id %}">Provide Feedback</a>
-                            </div>
-                          </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="col-md-12">
-                      <p class="no-topics">No Submitted Projects Available</p>
-                    </div>
-                {% endif %}
-             </div>
-            </div>
-          </div>
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title title-main">PROJECTS SUBMISSION FEEDBACK</h4>
         </div>
-      
+      </div>
+      {% if final_submitted_projects and draft_submitted_projects %}
+  
+      <div class="col-md-6">
+        <div class="row">
+          {% if final_submitted_projects %}
+            <h4 class="title-feedback">Final Projects</h4>
+            {% for project in final_submitted_projects %}
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">Project Name</h4>
+                    <p class="card-category">{{project.project}}</p>
+                  </div>
+                  <div class="card-body">
+                    <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
+                    <label class="labl"><span class="project-detail">Project Report:</span> {{project.filename}} <a href="{{project.report.url}}" download> <span class="download"><img class="download-img" src="{% static 'img/download.png' %}" /> Download</span></a></label>
+                    <label class="labl"><span class="project-detail">Project Design Images:</span> {{project.design}} <a href="{{project.design_images.url}}" download> <span class="download"><img class="download-img" src="{% static 'img/download.png' %}" /> Download</span></a></label>
+                    <label class="labl"><span class="project-detail">Project Status :</span>{{project.status}}</label>
+                    <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
+                    <a class="approve-link" href="{% url 'provide_feedback' project.id %}">Provide Feedback</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+            {% if draft_submitted_projects %}
+                <h4 class="title-feedback">Draft Projects</h4>
+                {% for project in draft_submitted_projects %}
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header card-header-primary">
+                        <h4 class="card-title">Project Name</h4>
+                        <p class="card-category">{{project.project}}</p>
+                      </div>
+                      <div class="card-body">
+                        <label class="labl"><span class="project-detail">Student Name :</span> {{project.student}}</label>
+                        <label class="labl"><span class="project-detail">Project Report:</span> {{project.filename}} <a href="{{project.report.url}}" download> <span class="download"><img class="download-img" src="{% static 'img/download.png' %}" /> Download</span></a></label>
+                        <label class="labl"><span class="project-detail">Project Design Images:</span> {{project.design}} <a href="{{project.design_images.url}}" download> <span class="download"><img class="download-img" src="{% static 'img/download.png' %}" /> Download</span></a></label>
+                        <label class="labl"><span class="project-detail">Project Status :</span>{{project.status}}</label>
+                        <label class="labl"><span class="project-detail">Submission Date :</span>{{project.date}}</label>
+                        <a class="approve-link" href="{% url 'provide_feedback' project.id %}">Provide Feedback</a>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+      </div>
+      {% else %}
+        <div class="col-md-12">
+          <p class="no-topics">No Submitted Projects Available</p>
+        </div>
+      {% endif %}
+  </div>
+</div>
+
+
 {% endblock %}
+
 

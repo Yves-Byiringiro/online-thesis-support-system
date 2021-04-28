@@ -7,7 +7,6 @@ from django.contrib.auth.models import Group
 
 
 
-
 def is_teacher(user):
     return user.groups.filter(name='TEACHER').exists()
 
@@ -74,8 +73,8 @@ def dashboard(request):
         }
         return render(request,'academic_affairs/dashboard.html',context)
     else:
-        projects = Topic.objects.all().exclude(status='APPROVED')
-        assigned_project = SelectedTopic.objects.filter(student=request.user)
+        projects = Topic.objects.exclude(status='APPROVED').order_by('-id')
+        assigned_project = SelectedTopic.objects.filter(student=request.user).filter(status='APPROVED').order_by('-id')
         return render(request,'student/dashboard.html',{'projects':projects, 'assigned_project':assigned_project})
 
 
@@ -100,7 +99,7 @@ def write_topic(request):
 @login_required
 @user_passes_test(is_teacher)
 def selected_project(request):
-    selected_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='PENDING')
+    selected_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='PENDING').order_by('-id')
     return render(request, 'teacher/selected_topic.html',{'selected_topics':selected_topics})
 
 
@@ -125,8 +124,7 @@ def confirm_project(request, pk):
 @login_required
 @user_passes_test(is_teacher)
 def approved_topics(request):
-    approved_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='APPROVED')
-
+    approved_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='APPROVED').order_by('-id')
     return render(request, 'teacher/approved_topics.html',{'approved_topics':approved_topics})
 
 
@@ -134,15 +132,14 @@ def approved_topics(request):
 @login_required
 @user_passes_test(is_teacher)
 def denied_topics(request):
-    denied_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='DENIED')
-
+    denied_topics = SelectedTopic.objects.filter(project__teacher=request.user).filter(status='DENIED').order_by('-id')
     return render(request, 'teacher/denied_topics.html',{'denied_topics':denied_topics})
 
 
 @login_required
 @user_passes_test(is_teacher)
 def proposal_projects(request):
-    proposal_projects = ProjectProposal.objects.all().filter(status=False)
+    proposal_projects = ProjectProposal.objects.filter(status=False).filter(project__project__teacher=request.user).order_by('-id')
     return render(request, 'teacher/proposal_projects.html', {'proposal_projects':proposal_projects})
 
 
@@ -173,8 +170,10 @@ def write_feedback(request, pk):
 @login_required
 @user_passes_test(is_teacher)
 def submitted_projects(request):
-    submitted_projects = ProjectSubmission.objects.all()
-    return render(request, 'teacher/submitted_projects.html', {'submitted_projects':submitted_projects})
+    draft_submitted_projects = ProjectSubmission.objects.filter(project__project__teacher=request.user).filter(status='DRAFT').order_by('-id')
+    final_submitted_projects = ProjectSubmission.objects.filter(project__project__teacher=request.user).filter(status='FINAL').order_by('-id')
+
+    return render(request, 'teacher/submitted_projects.html', {'draft_submitted_projects':draft_submitted_projects, 'final_submitted_projects':final_submitted_projects})
 
 
 
@@ -220,7 +219,7 @@ def add_project_materials(request):
 @login_required
 @user_passes_test(is_teacher)
 def all_feedback_materials(request):
-    feedback_materials = ProjectMaterialsFeedback.objects.filter(project__teacher=request.user)
+    feedback_materials = ProjectMaterialsFeedback.objects.filter(project__teacher=request.user).order_by('-id')
     return render(request ,'teacher/all_feedback_materials.html',{'feedback_materials':feedback_materials})
 
 
@@ -331,8 +330,8 @@ def no_feedback(request):
 @login_required
 def project_submission_feedback(request):
     try:
-        draft_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='DRAFT')
-        final_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='FINAL')
+        draft_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='DRAFT').order_by('-id')
+        final_feedback = ProjectSubmissionFeedback.objects.all().filter(project__student=request.user).filter(project__status='FINAL').order_by('-id')
         
         return render(request,'student/project_submission_feedback.html',{'draft_feedback':draft_feedback, 'final_feedback':final_feedback})
     except:
@@ -350,7 +349,7 @@ def no_feedback_project_submission(request):
 
 @login_required
 def project_materials(request):
-    materials = ProjectMaterial.objects.filter(project__student=request.user)
+    materials = ProjectMaterial.objects.filter(project__student=request.user).order_by('-id')
     return render(request, 'student/project_materials.html',{'materials':materials})
 
 
@@ -359,11 +358,11 @@ def project_materials(request):
 def feedback_materials(request, pk):
     material = ProjectMaterial.objects.get(id=pk)
     if request.method == 'POST':
-        form = ProjectMaterialsFeedbackForm(request.POST or None, instance=material)
+        form = ProjectMaterialsFeedbackForm(request.POST or None, request.FILES)
         if form.is_valid():
             feedback = form.save(commit=False)
             feedback.student = request.user
-            feedback.project = material.project
+            feedback.project = material
             feedback.save()
             return redirect('dashboard')
     else:
