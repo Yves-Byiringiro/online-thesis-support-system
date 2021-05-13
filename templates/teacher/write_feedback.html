@@ -41,6 +41,21 @@
     text-align:center;
     
 }
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 470px;
+    margin-left:180px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
+}
 </style>
 
 
@@ -48,13 +63,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card-header card-header-primary">
-        <h4 class="card-title title-main">PROPOSAL PROJECT FEEDBACK</h4>
+        <h4 class="card-title title-main">PROJECT PROPOSAL FEEDBACK</h4>
       </div>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-10 form-card">
       {% if already_gave_feedback %}
-          <h3>You have already give feedback to this project</h3>
+        <p class="error"><span class="sorry"> Sorry !</span>You have submitted the feedback for this poject proposal</p>
       {% else %}
         <form method="post" class="form-topic" enctype="multipart/form-data">
         {% csrf_token %}

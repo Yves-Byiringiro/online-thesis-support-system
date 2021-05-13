@@ -8,16 +8,50 @@
 .text{
     margin: 20px 0px 35px 0px;
 }
+.success{
+	text-align: center;
+    margin: 30px 0px;
+    color: white;
+    background: #50b950;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 41px;
+}
+.errorlist{
+	text-align: center;
+    color: white;
+    background: #ff1313;
+    padding: 20px 0px;
+    border-radius: 40px;
+	margin-top:15px;
+}
 </style>
 
 
 		<h1>Account Login</h1>
+
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				{% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+					
+					<li class="{{ message.tags }}">{{ message }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+			<div class="col-md-3"></div>
+
+		</div>
+		{{form.non_field_errors }}
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<form method="post">
-          {% csrf_token %}
-          {{form.username}}
-          {{form.password}}
+					{% csrf_token %}
+					{{form.username}}
+					{{form.password}}
 					<div class="wthree-text">
 						<label class="anim">
 						</label>

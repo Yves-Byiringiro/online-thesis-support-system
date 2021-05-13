@@ -21,9 +21,12 @@ def register_student(request):
         if form.is_valid():
             user=form.save()
             user.set_password(user.password)
+            student = form.cleaned_data.get('username')
             user.save()
             my_student_group = Group.objects.get_or_create(name='STUDENT')
             my_student_group[0].user_set.add(user)
+            
+            messages.success(request, 'Account was created for user ' + student)
             return redirect('login')
     else:
         form = StudentSignUpForm()
@@ -93,7 +96,10 @@ def write_topic(request):
             save_project.name = request.POST['name']
             save_project.description = request.POST['description']
             save_project.save()
-            return redirect('dashboard')
+            messages.success(request, 'Your topic was successfully created !')
+            return redirect('write_topic')
+        else:
+            messages.warning(request, 'Something went wrong.')
     else:
         form = ProposedProjectForm()
     
@@ -115,7 +121,6 @@ def confirm_project(request, pk):
     form = ConfirmProjectForm(request.POST or None, instance=project)
     if form.is_valid():
         check_assigned_twice = SelectedTopic.objects.filter(student=project.student).filter(status='APPROVED').exists() and form.cleaned_data.get('status') == 'APPROVED'
-
         if check_assigned_twice:
             return render(request, 'teacher/approve.html',{'form':form, "error": "The student has another project assigned to him/her"})
 
@@ -213,7 +218,10 @@ def add_project_materials(request):
             material = form.save(commit=False)
             material.teacher = request.user
             material.save()
-            return redirect('dashboard')
+            messages.success(request, 'Project materials was successfully submitted !')
+            return redirect('add_project_materials')
+        else:
+            messages.warning(request, 'Something went wrong.')
     else:
         form = ProjectMaterialForm(request=request)
     return render(request, 'teacher/add_project_materials.html', {'form':form})
@@ -266,11 +274,11 @@ def upload_proposal(request):
     if request.method == 'POST':
         form = ProjectProposalForm(request.POST or None, request.FILES, request=request)
         if form.is_valid():
-
             upload_proposal = form.save(commit=False)
             upload_proposal.student = request.user
             upload_proposal.save()
-            return redirect('dashboard')
+            messages.success(request, 'Project proposal was successfully submitted !')
+            return redirect('upload_proposal')
     else:
         form =  ProjectProposalForm(request=request)
     

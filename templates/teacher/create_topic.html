@@ -34,12 +34,33 @@
     border: none;
     cursor: pointer;
 }
+.messages li{
+    text-align: center;
+    list-style: none;
+    padding: 15px 0px;
+    color: white;
+    font-weight: 600;
+}
+.messages .warning{
+  background:#ff2300;
+}
+.messages .success{
+  background:#16d436;
+}
 </style>
 
 <div class="container-fluid">
   <div class="row">
+   
     <div class="col-md-1"></div>
     <div class="col-md-10 form-card">
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       <form method="post" class="form-topic">
           {% csrf_token %}
           <div class="mb-4">

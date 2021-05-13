@@ -33,12 +33,37 @@
     border: none;
     cursor: pointer;
 }
-
 .title-main{
     color:black;
     font-weight:600;
-    text-align:center;
-    
+    text-align:center;   
+}
+.messages li{
+    text-align: center;
+    list-style: none;
+    padding: 15px 0px;
+    color: white;
+    font-weight: 600;
+}
+.messages .warning{
+  background:#ff2300;
+}
+.messages .success{
+  background:#16d436;
+}
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 470px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
 }
 </style>
 
@@ -47,13 +72,21 @@
    
     <div class="col-md-1"></div>
     <div class="col-md-10 form-card">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
     {% if already_exist %}
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title title-main">You have already submitted the project proposal !, You can't submit proposal project twice</h4>
-          </div>
+      <div class="row mt-5">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+          <p class="error"><span class="sorry"> Sorry !</span>You have submitted the project proposal before, You can't submit it twice.</p>
         </div>
+        <div class="col-md-4"></div>
       </div>
    
     {% else %}
