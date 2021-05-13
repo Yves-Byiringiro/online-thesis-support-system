@@ -238,9 +238,12 @@ def book_project(request, pk):
         if form.is_valid():
 
             check_book_twice = SelectedTopic.objects.filter(project=project).filter(student=request.user).exists()
+            check_booked_before = SelectedTopic.objects.filter(project=project).filter(status='APPROVED').exists()
 
             if check_book_twice:
                 return render(request, 'student/take_project.html',{'project':project, 'form':form, "error": "You can't select the same project twice"})
+            elif check_booked_before:
+                return render(request, 'student/take_project.html',{'project':project, 'form':form, "error_before": "This project has been already assigned to other student, try other projects"})
 
             book_project = form.save(commit=False)
             book_project.project = project
@@ -257,7 +260,7 @@ def book_project(request, pk):
 @login_required
 def upload_proposal(request):
     if request.method == 'POST':
-        form = ProjectProposalForm(request.POST or None, request.FILES)
+        form = ProjectProposalForm(request.POST or None, request.FILES, request=request)
         if form.is_valid():
 
             upload_proposal = form.save(commit=False)
@@ -265,7 +268,7 @@ def upload_proposal(request):
             upload_proposal.save()
             return redirect('dashboard')
     else:
-        form =  ProjectProposalForm()
+        form =  ProjectProposalForm(request=request)
     
     already_exist = ProjectProposal.objects.filter(student=request.user).exists()
 

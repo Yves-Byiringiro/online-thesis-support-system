@@ -45,6 +45,20 @@
     text-align:center;
     
 }
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 420px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
+}
 </style>
 
 <div class="container-fluid">
@@ -53,7 +67,24 @@
         <div class="card-header card-header-primary">
           <h4 class="card-title title-main">{{project.name}}</h4>
         </div>
-        {{error}}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-4">
+                {% if error  %}
+                  <p class="error"><span class="sorry"> Sorry !</span>{{error}}</p>
+                {% else %}
+                {% endif %} 
+
+                {% if error_before %}
+                 
+                  <p class="error"><span class="sorry"> Sorry !</span>{{error_before}}</p>
+                {% else %}
+                {% endif %}
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+
     </div>
     <div class="col-md-1 mb-4"></div>
     <div class="col-md-10 mb-4">

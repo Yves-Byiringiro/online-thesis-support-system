@@ -69,6 +69,20 @@ class ProjectProposalForm(forms.ModelForm):
     class Meta:
         model = ProjectProposal
         fields = ['project','proposal_file','comment']
+    
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(ProjectProposalForm, self).__init__(*args, **kwargs)
+        self.fields['project'].queryset = SelectedTopic.objects.filter(student=self.request.user).filter(status='APPROVED')
+
+
+
+    # def __init__(self, *args, **kwargs):
+    #     self.request = kwargs.pop('request')
+    #     super(AddUserProfileForm, self).__init__(*args, **kwargs)
+    #     self.fields['project_name'].queryset = Project.objects.exclude(
+    #         project_name=self.request.user.user_profile.project_name)
+
 
 
 class ProjectSubmissionForm(forms.ModelForm):

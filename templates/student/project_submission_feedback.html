@@ -38,6 +38,20 @@
     font-weight: 500;
     text-decoration: underline;
 }
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 420px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
+}
 </style>
 
 
@@ -48,6 +62,7 @@
           <h4 class="card-title title-main">PROJECTS SUBMISSION FEEDBACK</h4>
         </div>
       </div>
+      {% if final_feedback or draft_feedback %}
       <div class="col-md-6">
         <div class="row">
           {% if final_feedback %}
@@ -94,6 +109,14 @@
             {% endif %}
         </div>
       </div>
+          
+        {% else %}
+        <div class="col-md-3 mt-5"></div>
+        <div class="col-md-4 mt-5">
+          <p class="error"><span class="sorry"> Sorry !</span>You don't have feedback on your project submission.</p>
+        </div>
+        <div class="col-md-4 mt-5"></div>
+        {% endif %}
   </div>
 </div>
 

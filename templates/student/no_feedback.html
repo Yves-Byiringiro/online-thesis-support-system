@@ -22,6 +22,20 @@
 .labl{
   display:block;
 }
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 470px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
+}
 </style>
 
 
@@ -31,9 +45,16 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card-header card-header-primary">
-            <h4 class="card-title title-main">You can't submit the project right now, without feedback for your proposal project</h4>
+            <h4 class="card-title title-main">Submit Project</h4>
           </div>
         </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+          <p class="error"><span class="sorry"> Sorry !</span>You can't submit the project right now, without feedback for your project proposal.</p>
+        </div>
+        <div class="col-md-4"></div>
       </div>
     </div>
   </div>
