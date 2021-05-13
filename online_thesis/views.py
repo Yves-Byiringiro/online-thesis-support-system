@@ -5,6 +5,10 @@ from .models import *
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group
 
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 
 def is_teacher(user):
@@ -371,3 +375,19 @@ def feedback_materials(request, pk):
     else:
         form = ProjectMaterialsFeedbackForm()
     return render(request, 'student/feedback_materials.html',{'form':form})
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.warning(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'teacher/change_password.html', {'form': form})

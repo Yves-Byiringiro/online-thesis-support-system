@@ -57,8 +57,7 @@ class ProjectMaterialForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super(ProjectMaterialForm, self).__init__(*args, **kwargs)
-        self.fields['project'].queryset = Topic.objects.filter(teacher=self.request.user)
-
+        self.fields['project'].queryset = SelectedTopic.objects.filter(project__teacher=self.request.user)
 
 
 #####################################           Students           #########################

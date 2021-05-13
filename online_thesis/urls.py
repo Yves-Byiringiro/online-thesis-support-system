@@ -14,7 +14,7 @@ urlpatterns = [
 
     path('register/', register_student, name='register'),
     path('dashboard/', dashboard, name='dashboard'),
-    path('change-password',auth_views.PasswordChangeView.as_view(template_name='teacher/change_password.html',success_url = 'dashboard'), name='change_password'),
+    path('change-password', change_password, name='change_password'),
 
 
     path('register-teacher/', register_teacher, name='register_teacher'),
