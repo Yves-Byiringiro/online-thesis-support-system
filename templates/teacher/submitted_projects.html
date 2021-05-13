@@ -39,6 +39,20 @@
     font-weight: 500;
     text-decoration: underline;
 }
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 420px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
+}
 </style>
 
 
@@ -103,8 +117,14 @@
       </div>
       {% else %}
         <div class="col-md-12">
-          <p class="no-topics">No Submitted Projects Available</p>
-        </div>
+            <div class="row">
+                <div class="col-md-3 mt-5"></div>
+                <div class="col-md-4 mt-5">
+                  <p class="error"><span class="sorry"> Sorry !</span>No submitted projects available.</p>
+                </div>
+                <div class="col-md-4 mt-5"></div>
+            </div>
+          </div>
       {% endif %}
   </div>
 </div>

@@ -29,6 +29,20 @@
   font-size: 20px;
   font-weight: 400;
 }
+.error {
+    text-align: center;
+    background: darkblue;
+    color: white;
+    padding: 20px;
+    margin-top: 10px;
+    width: 420px;
+}
+.sorry{
+    font-size: 23px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 20px;
+}
 </style>
 
 
@@ -60,7 +74,13 @@
             {% endfor %}
         {% else %}
           <div class="col-md-12">
-            <p class="no-topics">No Selected Topics Available</p>
+            <div class="row">
+                <div class="col-md-3 mt-5"></div>
+                <div class="col-md-4 mt-5">
+                  <p class="error"><span class="sorry"> Sorry !</span>No selected topics available.</p>
+                </div>
+                <div class="col-md-4 mt-5"></div>
+            </div>
           </div>
         {% endif %}
        

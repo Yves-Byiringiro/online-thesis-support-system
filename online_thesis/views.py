@@ -204,14 +204,14 @@ def provide_feedback(request, pk):
 @user_passes_test(is_teacher)
 def add_project_materials(request):
     if request.method == 'POST':
-        form = ProjectMaterialForm(request.POST or None, request.FILES)
+        form = ProjectMaterialForm(request.POST or None, request.FILES, request=request)
         if form.is_valid():
             material = form.save(commit=False)
             material.teacher = request.user
             material.save()
             return redirect('dashboard')
     else:
-        form = ProjectMaterialForm()
+        form = ProjectMaterialForm(request=request)
     return render(request, 'teacher/add_project_materials.html', {'form':form})
 
 

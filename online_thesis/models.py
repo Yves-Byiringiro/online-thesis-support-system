@@ -100,7 +100,7 @@ class ProjectSubmissionFeedback(models.Model):
 
 class ProjectMaterial(models.Model):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(SelectedTopic, on_delete=models.CASCADE)
+    project = models.ForeignKey(Topic, on_delete=models.CASCADE)
     similar_topic_file = models.FileField(upload_to='similar_topic_file')
     date = models.DateTimeField(auto_now_add=True)
 
