@@ -251,11 +251,14 @@ def book_project(request, pk):
 
             check_book_twice = SelectedTopic.objects.filter(project=project).filter(student=request.user).exists()
             check_booked_before = SelectedTopic.objects.filter(project=project).filter(status='APPROVED').exists()
+            check_selected =  SelectedTopic.objects.filter(student=request.user).exists()
 
             if check_book_twice:
                 return render(request, 'student/take_project.html',{'project':project, 'form':form, "error": "You can't select the same project twice"})
             elif check_booked_before:
                 return render(request, 'student/take_project.html',{'project':project, 'form':form, "error_before": "This project has been already assigned to other student, try other projects"})
+            elif check_selected:
+                return render(request, 'student/take_project.html',{'project':project, 'form':form, "error_selected": "There is another project you have selected before, Try again after 5 days or wait the feedback from the supervisor's project you selected before. "})
 
             book_project = form.save(commit=False)
             book_project.project = project

@@ -76,8 +76,12 @@
                 {% endif %} 
 
                 {% if error_before %}
-                 
                   <p class="error"><span class="sorry"> Sorry !</span>{{error_before}}</p>
+                {% else %}
+                {% endif %}
+
+                {% if error_selected %}
+                  <p class="error"><span class="sorry"> Sorry !</span>{{error_selected}}</p>
                 {% else %}
                 {% endif %}
             </div>
